@@ -1,5 +1,7 @@
 import {Request,Response} from "express"
 import User from "../../../database/models/userModel"
+import bcrypt from "bcrypt"
+
 //json data --> req.body// username, password, email
 //file--> req.files photo video sabai 
 
@@ -36,6 +38,11 @@ const registerUser = async (req:Request,res:Response)=>{
 
 class AuthController{
    static async registerUser(req:Request,res:Response){
+    if(req.body === undefined){
+        res.status(400).json({
+            message :"No data was sent"
+        })
+    }
      const {username,password,email} =req.body
     if(!username || !password || !email){
         res.status(400).json({
@@ -46,10 +53,10 @@ class AuthController{
         //insert into user table
         await User.create({
             username : username,
-            password : password,
+            password : bcrypt.hashSync(password,12),
             email : email
         })
-        res.status(200).json({
+        res.status(201).json({
             message: "User registered successfully"
         })
     }

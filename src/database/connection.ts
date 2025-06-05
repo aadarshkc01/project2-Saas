@@ -19,7 +19,7 @@ sequelize.authenticate()
 })
 
 //migrate
-sequelize.sync({force: false})
+sequelize.sync({alter: false})
 .then(()=>{
     console.log("Migrated successfully new changes")
 })
