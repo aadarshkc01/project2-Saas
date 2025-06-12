@@ -60,7 +60,47 @@ class AuthController{
             message: "User registered successfully"
         })
     }
+
+
+    //login flow
+    //email/username, password (basic)
+    //email, password ---> data accept --> validation -->
+    //first check email exist or not verify garni --> if yes now check for password,
+    // Token generation(jwt web token)
+    //not-->  not registered
+    
+        async loginUser (req:Request, res:Response){
+        const {email,password} = req.body
+        if(!email || !password){
+            res.status(400).json({
+                message: "Please provide email,password"
+            })
+            return
+        }
+        const data = await User.findAll({
+            where:{
+                email
+            }
+        })
+        if (data.length==0) {
+            res.status(404).json({
+                message: "Not registered"
+            })
+        }else{
+            const isPAsswordMatch = bcrypt.compareSync(password,data[0].password)
+            if (isPAsswordMatch) {
+                //login vayo, and then token generation
+            }else{
+                res.status(403).json({
+                    message: "Invalid email or password"
+                })
+            }
+        }
+    
+    }
 }
+
+
 
 export default AuthController  //if method lai static garyo vane onject banauna pardaina direct export default ani class name garna milyo
 
