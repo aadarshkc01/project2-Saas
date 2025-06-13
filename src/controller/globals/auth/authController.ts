@@ -69,6 +69,7 @@ class AuthController{
     //first check email exist or not verify garni --> if yes now check for password,
     // Token generation(jwt web token)/your identity on digital platform 
     //not-->  not registered
+    //bcrypt
     
         async loginUser (req:Request, res:Response){
         const {email,password} = req.body
