@@ -1,6 +1,7 @@
 import {Request,Response} from "express"
 import User from "../../../database/models/userModel"
 import bcrypt from "bcrypt"
+import Jwt from "jsonwebtoken"
 
 //json data --> req.body// username, password, email
 //file--> req.files photo video sabai 
@@ -66,7 +67,7 @@ class AuthController{
     //email/username, password (basic)
     //email, password ---> data accept --> validation -->
     //first check email exist or not verify garni --> if yes now check for password,
-    // Token generation(jwt web token)
+    // Token generation(jwt web token)/your identity on digital platform 
     //not-->  not registered
     
         async loginUser (req:Request, res:Response){
@@ -87,14 +88,26 @@ class AuthController{
                 message: "Not registered"
             })
         }else{
-            const isPAsswordMatch = bcrypt.compareSync(password,data[0].password)
-            if (isPAsswordMatch) {
-                //login vayo, and then token generation
-            }else{
-                res.status(403).json({
-                    message: "Invalid email or password"
-                })
-            }
+              // check password , nepal123 --> hash conversion --> fsdkjfsdfjsd
+        // compare(plain password user bata aako password, hashed password register huda table ma baseko)
+         const isPasswordMatch = bcrypt.compareSync(password,data[0].password)
+         if(isPasswordMatch)
+            // login vayo , token generation 
+           const token =  jwt.sign({id :data[0].id },"thisissecrethai",{
+                expiresIn : "90d"
+            })
+            res.json({
+                token : token
+            })
+         }else{
+            res.status(403).json({
+                message : "Invalid email or password"
+            })
+         }
+
+    }
+   }
+   
         }
     
     }
