@@ -1,7 +1,7 @@
 import {Request,Response} from "express"
 import User from "../../../database/models/userModel"
 import bcrypt from "bcrypt"
-import Jwt from "jsonwebtoken"
+import jwt from "jsonwebtoken"
 
 //json data --> req.body// username, password, email
 //file--> req.files photo video sabai 
@@ -91,7 +91,7 @@ class AuthController{
               // check password , nepal123 --> hash conversion --> fsdkjfsdfjsd
         // compare(plain password user bata aako password, hashed password register huda table ma baseko)
          const isPasswordMatch = bcrypt.compareSync(password,data[0].password)
-         if(isPasswordMatch)
+         if(isPasswordMatch){
             // login vayo , token generation 
            const token =  jwt.sign({id :data[0].id },"thisissecrethai",{
                 expiresIn : "90d"
@@ -110,8 +110,7 @@ class AuthController{
    
         }
     
-    }
-}
+
 
 
 
