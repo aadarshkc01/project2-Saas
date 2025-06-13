@@ -16,25 +16,25 @@ import jwt from "jsonwebtoken"
 //forget password
 //reset password/otp
 
-const registerUser = async (req:Request,res:Response)=>{
-    const {username,password,email} =req.body
-    if(!username || !password || !email){
-        res.status(400).json({
-            message : "Please provide username, password, email"
-        })
-        return
-    }
-        //insert into user table
-        await User.create({
-            username : username,
-            password : password,
-            email : email
-        })
-        res.status(200).json({
-            message: "User registered successfully"
-        })
+// const registerUser = async (req:Request,res:Response)=>{
+//     const {username,password,email} =req.body
+//     if(!username || !password || !email){
+//         res.status(400).json({
+//             message : "Please provide username, password, email"
+//         })
+//         return
+//     }
+//         //insert into user table
+//         await User.create({
+//             username : username,
+//             password : password,
+//             email : email
+//         })
+//         res.status(200).json({
+//             message: "User registered successfully"
+//         })
     
-}
+// }
 
 
 class AuthController{
@@ -89,26 +89,26 @@ class AuthController{
             })
         }else{
               // check password , nepal123 --> hash conversion --> fsdkjfsdfjsd
-        // compare(plain password user bata aako password, hashed password register huda table ma baseko)
-         const isPasswordMatch = bcrypt.compareSync(password,data[0].password)
-         if(isPasswordMatch){
+            // compare(plain password user bata aako password, hashed password register huda table ma baseko)
+            const isPasswordMatch = bcrypt.compareSync(password,data[0].password)
+            if(isPasswordMatch){
             // login vayo , token generation 
-           const token =  jwt.sign({id :data[0].id },"thisissecrethai",{
+            const token =  jwt.sign({id :data[0].id },"thisissecrethai",{
                 expiresIn : "90d"
             })
             res.json({
-                token : token
+                token : token,
             })
-         }else{
+            }else{
             res.status(403).json({
                 message : "Invalid email or password"
             })
          }
 
     }
-   }
+    }
    
-        }
+}
     
 
 
