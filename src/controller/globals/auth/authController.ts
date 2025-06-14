@@ -75,17 +75,17 @@ class AuthController{
         const {email,password} = req.body
         if(!email || !password){
             res.status(400).json({
-                message: "Please provide email,password"
+                message: "Please provide email, password"
             })
             return
         }
-        const data = await User.findAll({ //return array
+        const data = await User.findAll({
             where:{
                 email
             }
         })
 
-        if (data.length==0) {
+        if (data.length === 0) {
             res.status(404).json({
                 message: "Not registered"
             })
