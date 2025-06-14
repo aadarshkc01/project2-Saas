@@ -16,25 +16,25 @@ import jwt from "jsonwebtoken"
 //forget password
 //reset password/otp
 
-// const registerUser = async (req:Request,res:Response)=>{
-//     const {username,password,email} =req.body
-//     if(!username || !password || !email){
-//         res.status(400).json({
-//             message : "Please provide username, password, email"
-//         })
-//         return
-//     }
-//         //insert into user table
-//         await User.create({
-//             username : username,
-//             password : password,
-//             email : email
-//         })
-//         res.status(200).json({
-//             message: "User registered successfully"
-//         })
+const registerUser = async (req:Request,res:Response)=>{
+    const {username,password,email} =req.body
+    if(!username || !password || !email){
+        res.status(400).json({
+            message : "Please provide username, password, email"
+        })
+        return
+    }
+        //insert into user table
+        await User.create({
+            username : username,
+            password : password,
+            email : email
+        })
+        res.status(200).json({
+            message: "User registered successfully"
+        })
     
-// }
+}
 
 
 class AuthController{
@@ -92,6 +92,7 @@ class AuthController{
         }else{
             //check password nepal2222 ---> hash conversion -->#bhsgjhjgxjgw
             //compare (plain password user dekhi aayeko, rw hashed passowrd register huda table ma baseko)
+
             const isPasswordMatch = bcrypt.compareSync(password,data[0].password)
             if (isPasswordMatch){
                 //login vayo, token generation
