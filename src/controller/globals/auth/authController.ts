@@ -79,7 +79,7 @@ class AuthController{
             })
             return
         }
-        const data = await User.findAll({
+        const data = await User.findAll({ //return array
             where:{
                 email
             }
