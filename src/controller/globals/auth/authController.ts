@@ -24,11 +24,11 @@ const registerUser = async (req:Request,res:Response)=>{
         })
         return
     }
-        //insert into user table
+        //insert into user table username, password and email
         await User.create({
             username : username,
             password : password,
-            email : email
+            email : email,
         })
         res.status(200).json({
             message: "User registered successfully"
