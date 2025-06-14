@@ -84,29 +84,24 @@ class AuthController{
                 email
             }
         })
+
         if (data.length==0) {
             res.status(404).json({
                 message: "Not registered"
             })
         }else{
-              // check password , nepal123 --> hash conversion --> fsdkjfsdfjsd
-            // compare(plain password user bata aako password, hashed password register huda table ma baseko)
+            //check password nepal2222 ---> hash conversion -->#bhsgjhjgxjgw
+            //compare (plain password user dekhi aayeko, rw hashed passowrd register huda table ma baseko)
             const isPasswordMatch = bcrypt.compareSync(password,data[0].password)
-            if(isPasswordMatch){
-            // login vayo , token generation 
-            const token =  jwt.sign({id :data[0].id },"thisissecrethai",{
-                expiresIn : "90d"
-            })
-            res.json({
-                token : token,
-            })
+            if (isPasswordMatch){
+                //login vayo, token generation
             }else{
-            res.status(403).json({
-                message : "Invalid email or password"
-            })
-         }
-
-    }
+                res.status(404).json({
+                    message: "Invalid email or password"
+                })
+            }
+        }
+    
     }
    
 }
