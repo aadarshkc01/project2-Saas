@@ -95,6 +95,13 @@ class AuthController{
             const isPasswordMatch = bcrypt.compareSync(password,data[0].password)
             if (isPasswordMatch){
                 //login vayo, token generation
+                const token = jwt.sign({id : data[0].id},"thisissecretehai",{
+                    expiresIn : "2min"
+                })
+                res.json({
+                    token : token
+                })
+
             }else{
                 res.status(404).json({
                     message: "Invalid email or password"
