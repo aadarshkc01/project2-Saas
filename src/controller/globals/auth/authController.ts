@@ -16,25 +16,25 @@ import jwt from "jsonwebtoken"
 //forget password
 //reset password/otp
 
-const registerUser = async (req:Request,res:Response)=>{
-    const {username,password,email} =req.body
-    if(!username || !password || !email){
-        res.status(400).json({
-            message : "Please provide username, password, email"
-        })
-        return
-    }
-        //insert into user table username, password and email
-        await User.create({
-            username : username,
-            password : password,
-            email : email,
-        })
-        res.status(200).json({
-            message: "User registered successfully"
-        })
+// const registerUser = async (req:Request,res:Response)=>{
+//     const {username,password,email} =req.body
+//     if(!username || !password || !email){
+//         res.status(400).json({
+//             message : "Please provide username, password, email"
+//         })
+//         return
+//     }
+//         //insert into user table username, password and email
+//         await User.create({
+//             username : username,
+//             password : password,
+//             email : email,
+//         })
+//         res.status(200).json({
+//             message: "User registered successfully"
+//         })
     
-}
+// }
 
 
 class AuthController{
@@ -71,7 +71,7 @@ class AuthController{
     //not-->  not registered
     //bcrypt
     
-        async loginUser (req:Request, res:Response){
+        static async loginUser (req:Request, res:Response){
         const {email,password} = req.body
         if(!email || !password){
             res.status(400).json({
@@ -97,10 +97,11 @@ class AuthController{
             if (isPasswordMatch){
                 //login vayo, token generation
                 const token = jwt.sign({id : data[0].id},"thisissecretehai",{
-                    expiresIn : "2min"
+                    expiresIn : "30d"
                 })
-                res.json({
-                    token : token
+                res.status(200).json({
+                    token : token,
+                    message : "Logged in success"
                 })
 
             }else{

@@ -16,8 +16,9 @@ class User extends Model{
     
     @Column({
         type: DataType.STRING
+
     })
-    declare userName : string
+    declare username : string
 
     @Column({
         type: DataType.STRING
@@ -26,7 +27,7 @@ class User extends Model{
 
     @Column({
         type : DataType.STRING,
-        unique: true
+        unique : true
     })
     declare email : string
 
