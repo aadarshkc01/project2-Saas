@@ -44,7 +44,8 @@ class AuthController{
             message :"No data was sent"
         })
     }
-     const {username,password,email} =req.body
+    
+    const {username,password,email} = req.body
     if(!username || !password || !email){
         res.status(400).json({
             message : "Please provide username, password, email"

@@ -21,7 +21,7 @@ class User extends Model{
     declare username : string
 
     @Column({
-        type: DataType.STRING
+        type: DataType.STRING,
     })
     declare password : string
 
