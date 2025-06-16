@@ -1,7 +1,5 @@
 import app from "./src/app";
 // import { envConfig } from "./src/config/config";
-import { config } from "dotenv";
-config()
 
 
 import "./src/database/connection"

@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import sequelize from "../../database/connection";
+import generateRandomInstituteNumber from "../../services/generateRandomInstituteNumber";
 
 
 class InstituteController{
@@ -15,8 +16,10 @@ class InstituteController{
             return
         }
 
+        const instituteNumber = generateRandomInstituteNumber()
+
         //aayo vane = institute create garna paryo --> instituute_72735278, course_862896 sth like this
-        await   sequelize.query(`CREATE TABLE institute (
+        await   sequelize.query(`CREATE TABLE IF NOT EXISTS institute_${instituteNumber} (
             id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
             instituteName VARCHAR(255) NOT NULL,
             instituteEmail VARCHAR(255) NOT NULL UNIQUE,
@@ -27,6 +30,17 @@ class InstituteController{
             createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
         )`)
+
+        await sequelize.query(`INSERT INTO institute_${instituteNumber} (instituteName, instituteEmail,institutePhoneNumber,instituteAddress,institutePanNo,instituteVatNo) VALUES (?,?,?,?,?,?)`, {
+            replacements: [instituteName, instituteEmail,institutePhoneNumber,instituteAddress,institutePanNO,instituteVatNo]
+        })
+
+        await sequelize.query(`CREATE TABLE teacher_${instituteNumber} (
+            id  INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+            techerName VARCHAR(255) NOT NULL,
+            techerEmail VARCHAR(255) NOT NULL UNIQUE,
+            techerPhoneNumber VARCHAR(255) NOT NULL UNIQUE
+            )`)
 
         res.status(200).json({
             message : "Institute created!"
