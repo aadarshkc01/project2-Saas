@@ -13,7 +13,7 @@ class Middleware {
             return
         }
 
-        //token verify garne
+        //verify garne 
         jwt.verify(token, 'thisissecretehai', async(erroraayo,resultaayo:any)=>{
             if (erroraayo) {
                 res.status(403).json({
