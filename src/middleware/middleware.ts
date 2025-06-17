@@ -1,9 +1,11 @@
 import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken"
 import User from "../database/models/userModel";
+import { IExtendedRequest } from "./type";
+
 
 class Middleware {
-    static isLoggedIn(req:Request,res:Response,next:NextFunction){
+    static isLoggedIn(req:IExtendedRequest,res:Response,next:NextFunction){
         //check if login or not (token accept then verify token)
         const token = req.headers.authorization //jwt
         if(!token){
@@ -21,23 +23,38 @@ class Middleware {
                 })
             } else {
                 //verified vayo
-                console.log(resultaayo, "Result aayo")
-                const userData = await User.findAll({
-                    where:{
-                        id : resultaayo.id
-                    }
-                })
-                if (userData.length === 0){
-                    res.status(404).json({
+                // console.log(resultaayo, "Result aayo")
+                // const userData = await User.findAll({
+                //     where:{
+                //         id : resultaayo.id
+                //     }
+                // })
+
+                const userData = await User.findByPk(resultaayo.id)
+                if(!userData){
+                    res.status(403).json({
                         message : "No user with that id, invalid token"
                     })
                 }else{
-                    console.log("Successfully verified")
+                    req.user = userData
                 }
+                next()
+            
             }
-        } )
-        next()
+        })
     }
 }
+//                 if (userData.length === 0){
+//                     res.status(404).json({
+//                         message : "No user with that id, invalid token"
+//                     })
+//                 }else{
+//                     console.log("Successfully verified")
+//                 }
+//             }
+//         } )
+//         next()
+//     }
+// }
 
 export default Middleware

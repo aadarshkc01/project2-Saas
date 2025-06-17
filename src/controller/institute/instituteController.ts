@@ -1,10 +1,12 @@
 import { Request, Response } from "express";
 import sequelize from "../../database/connection";
 import generateRandomInstituteNumber from "../../services/generateRandomInstituteNumber";
+import { IExtendedRequest } from "../../middleware/type";
+
 
 
 class InstituteController{
-    static async createInstitute(req:Request,res:Response){
+    static async createInstitute(req:IExtendedRequest,res:Response){
         const{instituteName, instituteEmail,institutePhoneNumber,instituteAddress} = req.body
         const instituteVatNo = req.body.instituteVatNo || null
         const institutePanNO = req.body.institutePanNo || null
