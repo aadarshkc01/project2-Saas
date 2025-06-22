@@ -21,7 +21,7 @@ class InstituteController{
         const instituteNumber = generateRandomInstituteNumber()
 
         //aayo vane = institute create garna paryo --> instituute_72735278, course_862896 sth like this
-        await   sequelize.query(`CREATE TABLE IF NOT EXISTS institute_${instituteNumber} (
+        await   sequelize.query(`CREATE TABLE IF NOT EXISTS institute_${institutePanNO || instituteVatNo} (
             id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
             instituteName VARCHAR(255) NOT NULL,
             instituteEmail VARCHAR(255) NOT NULL UNIQUE,
